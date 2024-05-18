@@ -1,0 +1,1 @@
+Ce dossier contient des fichiers log files contenant des codes stata créés pour  des raisons d'enquêtes... Jehdai est l'auteur et sur certains, il y a eu des contributions. Merci et amusez vous bien 😂😂😂😂😂👌👌👌👌😘😘😘 JEHDAI 
