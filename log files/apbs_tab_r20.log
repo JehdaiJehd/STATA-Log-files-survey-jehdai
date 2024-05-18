@@ -1,0 +1,306 @@
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  G:\Drive partagés\DRC - MEL FSP\05 Data System Reports\5.15 AM - Enquête annuelle\5.15.5 2023-08 APBS\06_analysis\06.3_log_files\apbs_tab_r
+> 20.log
+  log type:  text
+ opened on:  23 Aug 2023, 14:43:19
+
+. 
+end of do-file
+
+. do "C:\Users\MERCYC~1\AppData\Local\Temp\STD54_000000.tmp"
+
+. clear
+
+. use "$source\apbs_final"
+
+. 
+. 
+. keep if smplfrm_all_participants == 1
+(1,012 observations deleted)
+
+. 
+. svyset uid_cluster [pweight = pw_final_allpart]
+
+      pweight: pw_final_allpart
+          VCE: linearized
+  Single unit: missing
+     Strata 1: <one>
+         SU 1: uid_cluster
+        FPC 1: <zero>
+
+. 
+. svydescribe
+
+Survey: Describing stage 1 sampling units
+
+      pweight: pw_final_allpart
+          VCE: linearized
+  Single unit: missing
+     Strata 1: <one>
+         SU 1: uid_cluster
+        FPC 1: <zero>
+
+                                      #Obs per Unit
+                              ----------------------------
+Stratum    #Units     #Obs      min       mean      max   
+--------  --------  --------  --------  --------  --------
+       1        36       525        10      14.6        30
+--------  --------  --------  --------  --------  --------
+       1        36       525        10      14.6        30
+
+. 
+. *IN r_20_P2 % of households who have and use hygienic toilets : Must be add in apbs_comp
+. 
+. gen r_20b = 0 if i10_1_odeur == 0 | i10_1_odeur == 1 | i10_2_mouches == 0 | i10_2_mouches == 1 | i10_3_propre == 0 | i10_3_propre == 1 | i10_4_couverc
+> le == 0 | i10_4_couvercle == 1
+(10 missing values generated)
+
+. 
+. replace r_20b = 1 if i10_1_odeur == 0 & i10_2_mouches == 0 & i10_3_propre == 1
+(254 real changes made)
+
+. 
+. svy: mean r_20b
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       1        Number of obs   =        515
+Number of PSUs   =      36        Population size = 47,358.869
+                                  Design df       =         35
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+       r_20b |   .4960476   .0265294        .44219    .5499052
+--------------------------------------------------------------
+
+. svy: mean r_20b if health_zone == "kalehe"
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       1        Number of obs   =        196
+Number of PSUs   =      12        Population size = 16,275.635
+                                  Design df       =         11
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+       r_20b |   .4938501   .0428731       .399487    .5882132
+--------------------------------------------------------------
+
+. svy: mean r_20b if health_zone == "katana"
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       1        Number of obs   =        146
+Number of PSUs   =      11        Population size = 14,137.208
+                                  Design df       =         10
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+       r_20b |   .5599932   .0492372      .4502858    .6697007
+--------------------------------------------------------------
+
+. svy: mean r_20b if health_zone == "miti_murhesa"
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       1        Number of obs   =        173
+Number of PSUs   =      13        Population size = 16,946.027
+                                  Design df       =         12
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+       r_20b |   .4448116   .0442208      .3484628    .5411604
+--------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "C:\Users\MERCYC~1\AppData\Local\Temp\STD54_000000.tmp"
+
+. * IN 2.3.4.0.1  % of households with soap and water at a handwashing station commonly used by family members
+. 
+. gen in_23401 = 0 if i06_installavmains <= 3 & i06_installavmains >= 1
+(299 missing values generated)
+
+. 
+. replace in_23401 = 1 if i06_installavmains == 2
+(159 real changes made)
+
+. 
+. svy: mean in_23401
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       1        Number of obs   =        226
+Number of PSUs   =      33        Population size = 20,367.034
+                                  Design df       =         32
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+    in_23401 |   .6840275   .0561867       .569579     .798476
+--------------------------------------------------------------
+
+. 
+. svy: mean in_23401 if health_zone == "kalehe"
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       1        Number of obs   =        133
+Number of PSUs   =      12        Population size =  11,122.77
+                                  Design df       =         11
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+    in_23401 |    .835368   .0480378      .7296375    .9410985
+--------------------------------------------------------------
+
+. svy: mean in_23401 if health_zone == "katana"
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       1        Number of obs   =         20
+Number of PSUs   =       8        Population size = 1,969.3967
+                                  Design df       =          7
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+    in_23401 |   .2877925   .1132079      .0200983    .5554866
+--------------------------------------------------------------
+
+. svy: mean in_23401 if health_zone == "miti_murhesa"
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       1        Number of obs   =         73
+Number of PSUs   =      13        Population size = 7,274.8675
+                                  Design df       =         12
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+    in_23401 |   .5599041   .0899831      .3638477    .7559604
+--------------------------------------------------------------
+
+. 
+. 
+. ********************************************************************************
+. ***Sampling frame: Care Groups/Neigbourhood Groups (var "smplfrm_cg")
+. ********************************************************************************
+. clear 
+
+. use "$source\apbs_final"
+
+. keep if smplfrm_cg == 1
+(1,014 observations deleted)
+
+. svyset uid_cluster [pweight = pw_final_cg]
+
+      pweight: pw_final_cg
+          VCE: linearized
+  Single unit: missing
+     Strata 1: <one>
+         SU 1: uid_cluster
+        FPC 1: <zero>
+
+. svydescribe
+
+Survey: Describing stage 1 sampling units
+
+      pweight: pw_final_cg
+          VCE: linearized
+  Single unit: missing
+     Strata 1: <one>
+         SU 1: uid_cluster
+        FPC 1: <zero>
+
+                                      #Obs per Unit
+                              ----------------------------
+Stratum    #Units     #Obs      min       mean      max   
+--------  --------  --------  --------  --------  --------
+       1        36       523        12      14.5        28
+--------  --------  --------  --------  --------  --------
+       1        36       523        12      14.5        28
+
+. 
+. *IN 2.3.0.0.1 % of children under age five who had diarrhea in the prior two weeks
+. 
+. gen in_23001b = 0 if smplfrm_cg == 1
+
+. replace in_23001b = f3_1_pct_chn_diarrhea if f3_1_pct_chn_diarrhea > 0
+(237 real changes made, 112 to missing)
+
+. svy: mean in_23001b
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       1        Number of obs   =        411
+Number of PSUs   =      36        Population size =  7,978.469
+                                  Design df       =         35
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+   in_23001b |   .2455175   .0267912      .1911285    .2999066
+--------------------------------------------------------------
+
+. 
+. * IN 2.3.1.0.3  % CU5 with diarrhea treated with ORT
+. 
+. gen in_23103b = 0 if f3_1_pct_chn_diarrhea > 0
+(286 missing values generated)
+
+. replace in_23103b = f3_2_pct_chn_ort if f3_2_pct_chn_ort > 0
+(215 real changes made, 90 to missing)
+
+. svy: mean in_23103b
+(running mean on estimation sample)
+
+Survey: Mean estimation
+
+Number of strata =       1        Number of obs   =        147
+Number of PSUs   =      36        Population size = 2,826.3378
+                                  Design df       =         35
+
+--------------------------------------------------------------
+             |             Linearized
+             |       Mean   Std. Err.     [95% Conf. Interval]
+-------------+------------------------------------------------
+   in_23103b |   .8511239   .0354449       .779167    .9230809
+--------------------------------------------------------------
+
+. 
+. clear
+
+. log close
+      name:  <unnamed>
+       log:  G:\Drive partagés\DRC - MEL FSP\05 Data System Reports\5.15 AM - Enquête annuelle\5.15.5 2023-08 APBS\06_analysis\06.3_log_files\apbs_tab_r
+> 20.log
+  log type:  text
+ closed on:  23 Aug 2023, 14:44:36
+--------------------------------------------------------------------------------------------------------------------------------------------------------
